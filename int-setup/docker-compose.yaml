@@ -1,13 +1,24 @@
-version: '3.7'
+version: '3.8'
 services:
- mongo:
-  build:
-   context: .
-   dockerfile: Dockerfile-mongo
+ db:
+  image: postgres:alpine
+  restart: always
+  environment:
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=postgres
   ports:
-   - '27017:27017'
+   - '5432:5432'
   volumes:
-   - mongodata:/data/db
+   - db:/var/lib/postgresql/data
+ pgadmin:
+  image: dpage/pgadmin4
+  restart: always
+  environment:
+   - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+   - PGADMIN_DEFAULT_PASSWORD=root
+  ports:
+   - '5050:80'
+
 volumes:
- mongodata:
+ db:
   driver: local

@@ -1,7 +1,7 @@
 import app from './src/app.js';
 import appConfig from './src/appConfig.js';
 import debug from 'debug';
-import dbController from './src/helper/dbConnectionHelper.js';
+import db from './src/helper/dbConnectionHelper.js';
 
 const indexDebug = debug('app:index ->');
 const { port } = appConfig;
@@ -15,5 +15,7 @@ const { port } = appConfig;
       indexDebug(err.message);
     }
   });
-  await dbController();
+  await db.sequelize.sync({ force: true }).then(() => {
+    indexDebug(`Data Base is connected`);
+  }).catch((err)=> indexDebug(err.message));
 })();

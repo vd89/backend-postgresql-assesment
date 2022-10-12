@@ -12,5 +12,11 @@ export default {
   jwtSecret: config.get('JWT_SECRET') || process.env.JWT_SECRET || '',
   whiteList: config.get('CORS_WHITELIST') || process.env.CORS_WHITELIST || [],
   environment: config.get('ENVIRONMENT') || process.env.NODE_ENV || '',
-  mongoUrl: config.get('MONGO_URL') || process.env.MONGO_URL || '',
+  dbConfig: {
+    HOST: config.get('DB_HOST')|| process.env.DB_HOST || '',
+    USER: config.get('DB_USER')|| process.env.DB_USER ||'',
+    PASSWORD: config.get('DB_PASSWORD')|| process.env.DB_PASSWORD || '',
+    DB: config.get('DB_NAME') || process.env.DB_NAME ||'',
+    dialect: config.get('DB_DIALECT') || process.env.DB_DIALECT || '',
+  },
 };

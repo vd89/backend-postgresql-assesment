@@ -1,23 +1,24 @@
-import { connect } from 'mongoose';
 import debug from 'debug';
+import { Sequelize } from 'sequelize';
 import appConfig from '../appConfig.js';
 
-const log = debug('app:dbConnection ->');
-const { mongoUrl } = appConfig;
-const mongoOpt = {
-  keepAlive: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 50000,
-  socketTimeoutMS: 50000,
-};
+const { dbConfig } = appConfig;
 
-const dbController = async () => {
-  try {
-    await connect(mongoUrl, mongoOpt);
-    log(`MongoDb -> Connected to mongoDb Server`);
-  } catch (err) {
-    log(err.message);
-  }
-};
-export default dbController;
+const log = debug('app:dbConnection ->');
+
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+});
+const db ={};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+log(`Database is connected `);
+
+export default db;

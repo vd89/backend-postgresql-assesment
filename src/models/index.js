@@ -2,8 +2,7 @@ import { Sequelize } from 'sequelize';
 import debug from 'debug';
 import appConfig from '../appConfig.js';
 import getUserModel from './userModel.js';
-import userModel from './userModel.js';
-import User from './userModel.js';
+
 
 const { dbConfig } = appConfig;
 
@@ -28,6 +27,7 @@ db.users = await getUserModel(sequelize, Sequelize);
 export const databaseConnected = async () => {
   try {
     await sequelize.authenticate();
+    // sequelize.sync();
     log('Database Connected to the app ');
   } catch (err) {
     await sequelize.close();

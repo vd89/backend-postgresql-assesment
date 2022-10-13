@@ -15,7 +15,6 @@ import { errHandler, headerFunction, notFound, unauthorizedErrors } from './midd
 import { extendedRequestMiddleware } from './middleware/middleware.js';
 import apiRoutes from './router/index.js';
 import { pingRes, testAuth } from './helper/extraHelper.js';
-import { sequelize } from './models/index.js';
 
 const app = express();
 const appLog = debug('app:app -> ');
@@ -85,10 +84,5 @@ app.use(notFound);
 app.use(unauthorizedErrors);
 app.use(errHandler);
 
-sequelize.sync({ force: true }).then(() => {
-  appLog(`Sync Db.`);
-}).catch((err) => {
-  appLog(err.message);
-});
 
 export default app;

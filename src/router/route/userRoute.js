@@ -7,8 +7,6 @@ const userRoute = new Router();
 
 userRoute.get('/', testAuth);
 userRoute.post('/registerUser', registerRules(), validate, registerUser);
-// userRoute.post('/registerUser', registerUser);
-
 userRoute.post('/loginUser', loginRules(), validate, loginUser);
 
 

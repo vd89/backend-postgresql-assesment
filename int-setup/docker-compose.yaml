@@ -4,15 +4,19 @@ services:
   image: postgres:alpine
   restart: always
   environment:
-   - POSTGRES_USER=postgres
-   - POSTGRES_PASSWORD=postgres
+   - POSTGRES_USER=admin-user
+   - POSTGRES_PASSWORD=admin-password
+   - POSTGRES_DB=assignmentDb
   ports:
    - '5432:5432'
   volumes:
-   - db:/var/lib/postgresql/data
+   - postgresdb:/var/lib/postgresql/data
+
  pgadmin:
+  depends_on:
+   - postgres
   image: dpage/pgadmin4
-  restart: always
+  restart: unless-stopped
   environment:
    - PGADMIN_DEFAULT_EMAIL=admin@admin.com
    - PGADMIN_DEFAULT_PASSWORD=root
@@ -20,5 +24,5 @@ services:
    - '5050:80'
 
 volumes:
- db:
+ postgresdb:
   driver: local

@@ -1,6 +1,7 @@
-import debug from 'debug';
 import { Sequelize } from 'sequelize';
+import debug from 'debug';
 import appConfig from '../appConfig.js';
+import getUserModel from './userModel.js';
 
 const { dbConfig } = appConfig;
 
@@ -16,9 +17,24 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: 10000,
   },
 });
-const db ={};
+
+
+const db = {};
+
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-log(`Database is connected `);
 
+db.users = getUserModel(sequelize, Sequelize);
+
+
+export const databaseConnected = async () => {
+  try {
+    await sequelize.authenticate();
+    log('Database Connected to the app ');
+  } catch (err) {
+    await sequelize.close();
+    log('DataBase error', err.message);
+  }
+};
+export { sequelize };
 export default db;

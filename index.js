@@ -1,21 +1,19 @@
 import app from './src/app.js';
 import appConfig from './src/appConfig.js';
 import debug from 'debug';
-import db from './src/helper/dbConnectionHelper.js';
+import { databaseConnected } from './src/models/index.js';
 
 const indexDebug = debug('app:index ->');
 const { port } = appConfig;
-
+const eraseDataBaseOnSync = true;
 (async ()=>{
   indexDebug('Starting the server');
-  app.listen(port, () => {
+  app.listen(port, async () => {
     try {
       indexDebug(`Server is running on the http://localhost:${port}`);
     } catch (err) {
       indexDebug(err.message);
     }
   });
-  await db.sequelize.sync({ force: true }).then(() => {
-    indexDebug(`Data Base is connected`);
-  }).catch((err)=> indexDebug(err.message));
+  await databaseConnected();
 })();

@@ -5,7 +5,12 @@
  "DEFAULT_LANGUAGE": "en",
  "AVAILABLE_LOCALS": ["en"],
  "SESSION_SECRET": "",
+ "ENCRYPTION_KEY": "",
  "JWT_SECRET": "",
  "CORS_WHITELIST": ["http://localhost:8000/"],
- "MONGO_URL": "mongodb://${user}:${password}@localhost:27017/dev_data_viz?authSource=admin"
+ "DB_HOST": "localhost",
+ "DB_USER": "",
+ "DB_PASSWORD": "",
+ "DB_NAME": "",
+ "DB_DIALECT": "postgres"
 }

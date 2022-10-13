@@ -15,6 +15,7 @@ import { errHandler, headerFunction, notFound, unauthorizedErrors } from './midd
 import { extendedRequestMiddleware } from './middleware/middleware.js';
 import apiRoutes from './router/index.js';
 import { pingRes, testAuth } from './helper/extraHelper.js';
+import { sequelize } from './models/index.js';
 
 const app = express();
 const appLog = debug('app:app -> ');
@@ -71,7 +72,6 @@ app.use(helmet());
 app.set('showStackError', true);
 app.use('*', cors(corsOptionsDelegate));
 
-
 app.use(sessionClear);
 app.use(extendedRequestMiddleware);
 
@@ -81,8 +81,14 @@ app.get('/', testAuth);
 app.get('/ping', pingRes);
 app.use('/api', apiRoutes);
 
+app.use(notFound);
 app.use(unauthorizedErrors);
 app.use(errHandler);
-app.use(notFound);
+
+sequelize.sync({ force: true }).then(() => {
+  appLog(`Sync Db.`);
+}).catch((err) => {
+  appLog(err.message);
+});
 
 export default app;

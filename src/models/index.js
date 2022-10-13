@@ -2,12 +2,14 @@ import { Sequelize } from 'sequelize';
 import debug from 'debug';
 import appConfig from '../appConfig.js';
 import getUserModel from './userModel.js';
+import userModel from './userModel.js';
+import User from './userModel.js';
 
 const { dbConfig } = appConfig;
 
 const log = debug('app:dbConnection ->');
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+export const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   pool: {
@@ -18,14 +20,10 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   },
 });
 
-
 const db = {};
-
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-
-db.users = getUserModel(sequelize, Sequelize);
-
+db.users = await getUserModel(sequelize, Sequelize);
 
 export const databaseConnected = async () => {
   try {
@@ -36,5 +34,4 @@ export const databaseConnected = async () => {
     log('DataBase error', err.message);
   }
 };
-export { sequelize };
 export default db;

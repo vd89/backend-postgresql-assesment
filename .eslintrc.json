@@ -22,6 +22,7 @@
   "handle-callback-err": "error",
   "no-sync": "error",
   "one-var": ["error", "never"],
+  "no-unused-vars": "warn",
   "sort-imports": [
    "error",
    {

@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
+import debug from 'debug';
 import _ from 'lodash';
 
 import appConfig from '../appConfig.js';
 import { generateRandomString } from './encryptionHelper.js';
 
 const { sessionSecret } = appConfig;
+const log = debug('app:sessionHelper -> ');
 
 const oneDay = 1000 * 60 * 60 * 24;
 const usedKey = generateRandomString(16);
@@ -25,7 +28,6 @@ export const sessionClear = (req, res, next) => {
 
 export const sessionCheck = (req, res, next) => {
   const { cookies, session } = req;
-
   const check =
    !_.isEmpty(cookies) &&
    cookies.back-end-temp &&

@@ -1,9 +1,8 @@
 import debug from 'debug';
 import { comparePassword, encrypt, generateAuthToken } from '../helper/encryptionHelper.js';
-import db from '../models/index.js';
+import { User } from '../models/index.js';
+
 const logger = debug('app:userController -> ');
-const User = db.users;
-const OP = db.Sequelize.OP;
 
 export const registerUser = async (req, res, next) => {
   try {

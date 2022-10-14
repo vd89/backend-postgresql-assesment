@@ -1,5 +1,6 @@
 import debug from 'debug';
-const appLog = debug('app:middleware -> ');
+import { tokenVerify } from '../helper/encryptionHelper.js';
+const logger = debug('app:middleware -> ');
 
 export const notFound = (req, res, next) => {
   res.status(404);
@@ -32,10 +33,6 @@ export const headerFunction = (req, res, next) => {
         'Accept',
         'Authorization',
         'Accept-Language',
-        'x-client-id',
-        'x-client-secret',
-        'x-client-device',
-        'x-back-end-template-token',
       ].join(', '),
   );
   if (req.method === 'OPTIONS') {
@@ -49,8 +46,23 @@ export const unauthorizedErrors = (err, req, res, next) => {
     res.status(401).json({ error: err.name + ': ' + err.message });
   } else if (err) {
     res.status(400).json({ error: err.name + ': ' + err.message });
-    appLog(err);
+    logger(err);
   }
   next();
 };
 
+
+export const auth = async (req, res, next) => {
+  try {
+    const isToken = req.header('Authorization');
+    if (!isToken) {
+      return res.error('No Token, Authorization Denied');
+    }
+    const payload = await tokenVerify(isToken.split(' ')[1]);
+    req.user = { email: payload.email };
+    next();
+  } catch (err) {
+    logger(err.message);
+    next(err);
+  }
+};

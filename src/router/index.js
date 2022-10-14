@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import debug from 'debug';
 
 import { testAuth } from '../helper/extraHelper.js';
 import userRoute from './route/userRoute.js';
-
-const log = debug('app:apiRoutes -> ');
+import movieRoute from './route/movieRoute.js';
 
 const apiRoutes = new Router();
 
 apiRoutes.get('/v1/test', testAuth);
 apiRoutes.use('/v1/user', userRoute);
+apiRoutes.use('/v1/movies', movieRoute);
+
 
 export default apiRoutes;

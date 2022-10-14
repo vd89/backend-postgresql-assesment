@@ -12,7 +12,7 @@ const getMovieModel = async (sequelize, { DataTypes, Model }) => {
   }, {
     timeStamp: true,
     createdAt: false,
-    updatedAt: true,
+    updatedAt: false,
   },
   );
   return Movie;

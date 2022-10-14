@@ -37,7 +37,7 @@ export const databaseConnected = async () => {
     // many to many relation
     await Movie.belongsToMany(Actor, { through: 'movie_cast', as: 'casts', foreignKey: 'movies_id' });
     await Actor.belongsToMany(Movie, { through: 'movie_cast', as: 'movies', foreignKey: 'actors_id' });
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     await sequelize.authenticate();
     log('Database Connected to the app ');
   } catch (err) {

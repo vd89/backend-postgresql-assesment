@@ -8,7 +8,7 @@ const getMoviePersonModel = async (sequelize, { DataTypes, Model }) => {
   }, {
     timeStamps: false,
     createdAt: false,
-    updatedAt: true,
+    updatedAt: false,
   });
   return Actors;
 };

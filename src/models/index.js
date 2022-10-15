@@ -31,13 +31,13 @@ export const User = db.users = await getUserModel(sequelize, Sequelize);
 export const Movie = db.movies = await getMovieModel(sequelize, Sequelize);
 export const Actor = db.actors = await getMoviePersonModel(sequelize, Sequelize);
 
-
 export const databaseConnected = async () => {
   try {
     // many to many relation
-    await Movie.belongsToMany(Actor, { through: 'movie_cast', as: 'casts', foreignKey: 'movies_id' });
-    await Actor.belongsToMany(Movie, { through: 'movie_cast', as: 'movies', foreignKey: 'actors_id' });
-    await sequelize.sync({ force: false });
+    await Movie.belongsToMany(Actor, { through: 'movie_cast' });
+    await Actor.belongsToMany(Movie, { through: 'movie_cast' });
+
+    await sequelize.sync({ force: true });
     await sequelize.authenticate();
     log('Database Connected to the app ');
   } catch (err) {

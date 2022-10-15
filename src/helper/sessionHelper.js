@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import debug from 'debug';
 import _ from 'lodash';
 

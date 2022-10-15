@@ -16,7 +16,7 @@ export const registerUser = async (req, res, next) => {
     return res.error('User already in the database pls login');
   } catch (err) {
     logger(err.message);
-    next();
+    next(err);
   }
 };
 
@@ -31,10 +31,25 @@ export const loginUser = async (req, res, next) => {
     if (!isPassword) {
       return res.error('Password incorrect');
     }
+    req.session.user = {
+      name: isUser.name,
+      userFrom: isUser.userFrom,
+      _id: isUser.id,
+    };
     const token = await generateAuthToken(email);
     return res.ok({ message: 'LOGGED_IN_SUCCESS', data: { isUser, token } });
   } catch (err) {
     logger(err.message);
-    next();
+    next(err);
+  }
+};
+
+export const signOut = async (req, res, next) => {
+  try {
+    req.session.destroy();
+    return res.ok('SIGNED_OUT_SUCCESS');
+  } catch (err) {
+    logger(err.message);
+    next(err);
   }
 };

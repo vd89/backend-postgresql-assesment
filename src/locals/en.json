@@ -17,5 +17,9 @@
 	"User a": "User a",
 	"User already in the database pls login": "User already in the database pls login",
 	"User Does not exists in database": "User Does not exists in database",
-	"LOGGED_IN_SUCCESS": "LOGGED_IN_SUCCESS"
+	"LOGGED_IN_SUCCESS": "LOGGED_IN_SUCCESS",
+	"No Token, Authorization Denied": "No Token, Authorization Denied",
+	"MOVIE_ADDED": "MOVIE_ADDED",
+	"MOVIE_CREATED": "MOVIE_CREATED",
+	"MOVIE_FOUND": "MOVIE_FOUND"
 }

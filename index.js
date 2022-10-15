@@ -5,6 +5,7 @@ import { databaseConnected } from './src/models/index.js';
 
 const indexDebug = debug('app:index ->');
 const { port } = appConfig;
+
 (async ()=>{
   indexDebug('Starting the server');
   app.listen(port, async () => {
